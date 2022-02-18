@@ -1,0 +1,454 @@
+<!doctype html>
+<html>
+
+
+<head>
+	<title>A320neo Performance Calculator</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<link rel="stylesheet" href="stylesheet.css">
+	<script src="javascript.js"></script>
+
+</head>
+
+<body id="fullbody">
+
+	<!-- HEADER -->
+
+	<div class="header">
+		<table>
+			<tr>
+				<th>
+					<img src="images/Airbus-Logo.png" height="100">
+				</th>
+
+				<th>
+					<h1>
+						A320Neo easyEFB
+					</h1>
+				</th>
+			</tr>
+		</table>
+
+		<p_text>
+
+			With the help of this tool, performance values can be calculated for the A320Neo. Simpy just switch through
+			the
+			tabs.
+
+			<p_text>
+
+	</div>
+
+	<hr>
+
+	<!-- BUTTONS -->
+
+	<div class="tab">
+		<button class="tablink btn-1 btn-sep icon-info" onclick="openPage('start', this, 'grey')">Start</button>
+		<button class="tablink btn-1 btn-sep icon-info" onclick="openPage('Overview', this, 'grey')" id="defaultOpen">CG
+			Calculator</button>
+		<button class="tablink btn-1 btn-sep icon-info"
+			onclick="openPage('Performance_Calculator', this, 'grey')">Performance Calculator</button>
+		<button class="tablink btn-1 btn-sep icon-info" onclick="openPage('weather', this, 'grey')">WEATHER</button>
+		<button class="tablink btn-1 btn-sep icon-info" onclick="openPage('ofp_tab', this, 'grey')">OFP (as
+			PDF)</button>
+	</div>
+
+	<!-- SIMBRIEF START -->
+
+	<div class="tabcontent" id="start">
+
+		<div class="box">
+
+			<tr>
+				<p_headline>
+
+					Enter your Simbrief ID:
+
+				</p_headline>
+
+				<table>
+
+					<hr>
+
+					<tr>
+						<td>
+							Simbrief User-ID:
+							<input type="text" size="10" name="userid" id="user_id" placeholder="User-ID">
+						</td>
+
+						<td>
+							<input type="button" name="simbrief" value="Get Simbrief Data"
+								onclick="get_simbrief_data()">
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<p_text id="received_message" size="10" name="received_message"
+								style="color: green; font-weight: bold;"></p_text>
+						</td>
+					</tr>
+
+				</table>
+
+		</div>
+
+		<div class="box">
+
+			<tr>
+				<p_headline>
+
+					Flight-Briefing:
+
+				</p_headline>
+
+				<hr>
+
+				<table>
+
+					<tr>
+						<td>
+							Flight-Number:
+						</td>
+
+						<td>
+							<p_text id="fnum" size="10" name="fnum"></p_text>
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							From:
+						</td>
+
+						<td>
+							<p_text id="dep" size="10" name="dep"></p_text>
+						</td>
+					</tr>
+
+					<tr>
+
+						<td>
+							To:
+						</td>
+
+						<td>
+							<p_text id="arr" size="10" name="arr"></p_text>
+						</td>
+
+					</tr>
+
+					<tr>
+
+						<td>
+							Flight-Time:
+						</td>
+
+						<td>
+							<p_text id="ftime" size="10" name="ftime"></p_text>
+						</td>
+
+					</tr>
+
+					<tr>
+
+						<td>
+							Average-Wind:
+						</td>
+
+						<td>
+							<p_text id="av_wind" size="10" name="av_wind"></p_text>
+						</td>
+
+					</tr>
+
+					<td>
+						Route:
+					</td>
+
+					<td>
+						<p_text id="route" size="10" name="route"></p_text>
+					</td>
+
+			</tr>
+
+			</table>
+
+		</div>
+
+
+	</div>
+
+	<div id="Overview" class="tabcontent">
+
+
+		<div class="box">
+
+			<p_headline>
+
+				C/G Calculator
+
+			</p_headline>
+
+			<hr>
+
+			<table>
+				<tr>
+					<td>
+						ACTUAL BLOCK FUEL:
+					</td>
+
+					<td>
+						<input type="text" id="BlockFuel" size="10" name="BLOCK_FUEL">
+					</td>
+				</tr>
+
+				<tr>
+					<td>
+						ZFW C/G:
+					</td>
+
+					<td>
+						<input type="text" size="10" name="ZFW_CG" id="zfw_cg" placeholder="ZFW C/G">
+					</td>
+				</tr>
+
+				<tr>
+					<td>
+						<input type="button" name="button1" value="Caculate real C/G" onclick="cg_berechnen()">
+					</td>
+				</tr>
+
+				<tr>
+					<td>
+						C/G:
+					</td>
+					<td>
+						<p_text id="real_cg" size="10" name="real_cg"></p_text>
+					</td>
+				</tr>
+
+				<tr>
+					<td>
+						Trim:
+					</td>
+					<td>
+						<p_text id="trim" size="10" name="real_trim"></p_text>
+					</td>
+
+				</tr>
+
+				<tr>
+					<td>
+						<p_text id="real_cg" size="10" name="real_cg"></p_text>
+						<p_text id="trim" size="10" name="real_trim"></p_text>
+					</td>
+				</tr>
+
+			</table>
+
+			<br>
+
+			</form>
+
+		</div>
+
+		<div class="box">
+
+			<p_headline>
+
+				METAR
+
+			</p_headline>
+
+			<hr>
+
+			<table>
+
+				<form method="post" name="form2">
+
+					<td>
+						DEPATURE:
+					</td>
+
+					<td>
+						<p_text id="metar_1" size="10" name="dep_metar"></p_text>
+					</td>
+
+					</tr>
+
+					<tr>
+
+						<td>
+							ARRVIAL:
+						</td>
+
+						<td>
+							<p_text id="arr_metar_1" size="10" name="arr_metar"></p_text>
+						</td>
+
+			</table>
+
+		</div>
+
+	</div>
+
+	<div id="Performance_Calculator" class="tabcontent" style="display:none">
+
+		<!-- PERFORMANCE CALCULATOR-->
+
+		<div class="box">
+			<table>
+
+				<p_headline>
+
+					Performance Data
+
+				</p_headline>
+
+				<tr>
+					<td>
+						DEP-Airport:
+					</td>
+					<td>
+						<p_text id="icao" size="10" name="icao"></p_text>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						DEP-Metar:
+					</td>
+					<td>
+						<p_text id="metar_2" size="10" name="dep"></p_text>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Elevation:
+					</td>
+					<td>
+						<p_text id="elevation" size="10" name="elevation"></p_text>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						TOW/GROSS WEIGHT:
+					</td>
+					<td>
+						<p_text id="tow" size="10" name="TOW"></p_text>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Runway:
+					</td>
+					<td>
+						<p_text id="plan_rwy" size="10" name="runway"></p_text>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						C/G:
+					</td>
+					<td>
+						<p_text id="real_cg" size="10" name="runway"></p_text>
+					</td>
+				</tr>
+			</table>
+
+		</div>
+
+		<div>
+			<iframe src="http://perfcalc.pradz.de/test.php" width="100%" height="1000" name="fstools"
+				scrolling="no"></iframe>
+		</div>
+
+	</div>
+
+	<!-- WEATHER -->
+
+	<div class="tabcontent" style="display:none" id="weather">
+
+		<div class="box">
+
+			<p_headline>
+
+				METAR
+
+			</p_headline>
+
+			<hr>
+
+			<table>
+
+				<form method="post" name="form2">
+
+					<td>
+						DEPATURE:
+					</td>
+
+					<td>
+						<p_text id="metar_3" size="10" name="dep_metar"></p_text>
+					</td>
+
+					</tr>
+
+					<tr>
+
+						<td>
+							ARRVIAL:
+						</td>
+
+						<td>
+							<p_text id="arr_metar_2" size="10" name="arr_metar"></p_text>
+						</td>
+
+			</table>
+
+		</div>
+
+		<div class="box">
+
+			<p_headline>
+
+				WEATHERMAP
+
+			</p_headline>
+
+			<hr>
+
+			<img id="map_1">
+
+		</div>
+
+	</div>
+
+
+	<!-- OFP -->
+
+	<div id="ofp_tab" class="tabcontent" style="display:none">
+
+		<iframe id="iframe_src" style="width:100%; height:1000px;"></iframe>
+
+	</div>
+
+	<div id="footer" class="footer">
+
+		<br>
+		<br>
+
+		<p_footer>
+
+			Copyright Philipp Dorn | Airbus-EFB V0.3 | <a href="changelog.html">Changelog</a>
+
+		</p_footer>
+
+	</div>
+
+</body>
+
+</html>
